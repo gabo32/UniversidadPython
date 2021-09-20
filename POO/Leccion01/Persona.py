@@ -2,58 +2,70 @@ class Persona:
 
     # constructor
     # __dunder
-    def __init__(self, nombre, apellido, edad, *valores, **terminos):
+    def __init__(self, nombre, apellido, edad):
         # atributos de instancia
-        self.nombre = nombre
-        self.apellido = apellido
-        self.edad = edad
-        self.valores = valores
-        self.terminos = terminos
+        # _ indica que este atributo no se deberia acceder desde fuera
+        # __ indica que no se puede modificar
+        self._nombre = nombre
+        self._apellido = apellido
+        self._edad = edad
+
+    # getter
+    # decorador
+    @property
+    def nombre(self):
+        return self._nombre
+
+    # setter
+    # si se quita el set se dice que es una variable de solo lectura
+    @nombre.setter
+    def nombre(self, nombre):
+        self._nombre = nombre
+
+
+    @property
+    def apellido(self):
+        return self._apellido
+
+    @apellido.setter
+    def apellido(self, apellido):
+        self._apellido = apellido
+
+    @property
+    def edad(self):
+        return self._edad
+
+
+    @edad.setter
+    def edad(self, edad):
+        self._edad = edad
+
 
     # hay que agregar self a todos los metodos de instancia
     def mostrar_detalle(self):
-        print(f'Persona: {self.nombre} {self.apellido} edad: {self.edad} {self.valores} {self.terminos}')
-        pass
+        print(f'Persona: {self._nombre} {self._apellido} edad: {self._edad}')
 
-    def __str__(self):
-        pass
+    # metodo destructor
+    def __del__(self):
+        print(f'Persona: {self._nombre} {self._apellido}')
 
-    def __repr__(self):
-        pass
+if __name__ == '__main__':
+    persona1 = Persona('Juan', 'Perez', 28)
 
-    # indica que ya no se pondra nada mas
-    # indicar que cree la clase pero sin contenido
-    pass
+    # no se debe hacer
+    persona1._nombre = 'Juan Gabriel'
+    # no se puede moficiar
+    persona1.__nombre = 'Juan Jose'
+    persona1.mostrar_detalle()
 
+    # se llama al metodo nombre
+    print(persona1.nombre)
+    # se llama al setter
+    persona1.nombre = 'Juan jj'
+    print(persona1.nombre)
+    persona1.apellido = 'SMith'
+    persona1.edad = 33
+    persona1.mostrar_detalle()
 
-# crear objeto persona
-persona1 = Persona('Juan', 'Perez', 28)
-
-print(type(Persona))
-print(persona1.nombre)
-print(persona1.apellido)
-print(persona1.edad)
-
-persona1.nombre = 'Juan Gabriel'
-persona1.apellido = 'Juarez'
-persona1.edad = 25
-
-print(f'Objecto persona: {persona1.nombre} {persona1.apellido} edad: {persona1.edad}')
-
-persona2 = Persona('Karla', 'Gomez', 30)
-print(persona2.nombre)
-print(persona2.apellido)
-print(persona2.edad)
-
-persona1.mostrar_detalle()
-persona2.mostrar_detalle()
-
-Persona.mostrar_detalle(persona1)
-
-# agregar atributo al objeto
-persona1.telefono = '1234556'
-print(persona1.telefono)
-# la persona 2 no tiene el telefono
-# print(persona2.telefono)
-persona3 = Persona('Juan', 'Perez', 28, '55434', 2,456,6, m = 'Manzana', p='Pera')
-persona3.mostrar_detalle()
+    #nombre del modulo
+    print(__name__)
